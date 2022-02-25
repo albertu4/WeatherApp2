@@ -67,6 +67,7 @@
 				742C525927BFD20200775657 /* Services */,
 				742C525827BFD1E300775657 /* Models */,
 				742C525727BFD1D500775657 /* ViewControllers */,
+				74CEC71C27C91B1A00568460 /* Views */,
 				742C525427BFD19800775657 /* Storyboards */,
 				742C525527BFD1A400775657 /* Resources */,
 				742C525627BFD1B600775657 /* App */,
@@ -105,8 +106,6 @@
 			isa = PBXGroup;
 			children = (
 				7472669127C0D8F700458205 /* WeatherCollectionViewController.swift */,
-				746EA49627C0DA9A00AA8086 /* CurrentWeatherCollectionViewCell.swift */,
-				7472668F27C0AB9900458205 /* ForecastCollectionViewCell.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -125,6 +124,15 @@
 				742C525A27BFD34F00775657 /* NetworkManager.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		74CEC71C27C91B1A00568460 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				746EA49627C0DA9A00AA8086 /* CurrentWeatherCollectionViewCell.swift */,
+				7472668F27C0AB9900458205 /* ForecastCollectionViewCell.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
