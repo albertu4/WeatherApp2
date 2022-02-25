@@ -17,16 +17,22 @@ class NetworkManager {
     static let shared = NetworkManager()
     private init() {}
     
-    func fetchWeather(link: Link.RawValue, completion: @escaping (Result<Weather, Error>) -> ()) {
-        guard let url = URL(string: link) else { return }
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            guard let data = data else { return }
+    func fetchWeather(link: Link.RawValue, completion: @escaping (Result<Weather, NetworkError>) -> ()) {
+        guard let url = URL(string: link) else {
+            completion(.failure(.invalidURL))
+            return }
+        URLSession.shared.dataTask(with: url) { data, _, error in
+            guard let data = data else {
+                completion(.failure(.noData))
+                print(error?.localizedDescription ?? "No error description")
+                return }
             
             do {
                 let weather = try JSONDecoder().decode(Weather.self, from: data)
                 completion(.success(weather))
             } catch let error {
-                completion(.failure(error))
+                completion(.failure(.decodingError))
+                print(error)
             }
         }.resume()
     }
