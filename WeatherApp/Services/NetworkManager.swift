@@ -40,32 +40,22 @@ class NetworkManager {
         }.resume()
     }
     
-//    func fetchDataWithAlamofire(link: Link.RawValue) {
-//        AF.request(link)
-//            .validate()
-//            .responseJSON { dataResponse in
-//                print(dataResponse)
-                    
-//                            CurrentConditions(
-//                                dayhour: weathersData["dayhour"] as? String,
-//                                temp: weathersData["temp"] as? [String: Int],
-//                                precip: weathersData["precip"] as? String,
-//                                humidity: weathersData["humidity"] as? String,
-//                                wind: weathersData["wind"] as? [String: Int],
-//                                iconURL: weathersData["iconURL"] as? String,
-//                                comment: weathersData["comment"] as? String
-//                            )
-                            
-                            
-//                                [NextDays(
-//                                    day: weathersData["day"] as? String,
-//                                    comment: weathersData["comment"] as? String,
-//                                    maxTemp: weathersData["max_temp"] as? [String: Int],
-//                                    minTemp: weathersData["min_temp"] as? [String: Int],
-//                                    iconURL: weathersData["iconURL"] as? String)]
-                        
-//            }
-//    }
+    //MARK: - Fetch Data With Alamofire
+    func fetchDataWithAlamofire(link: Link.RawValue, completion: @escaping(Result<Weather, NetworkError>) -> Void) {
+        AF.request(link)
+            .validate()
+            .responseJSON { dataResponse in
+                switch dataResponse.result {
+                case .success(let value):
+                    let weather = Weather.getWeather(from: value)
+                    DispatchQueue.main.async {
+                        completion(.success(weather))
+                    }
+                case .failure:
+                    completion(.failure(.decodingError))
+                }
+            }
+    }
 }
 
 class IconManager {
