@@ -5,6 +5,7 @@
 //  Created by Михаил Иванов on 18.02.2022.
 
 import Foundation
+import Alamofire
 
 enum NetworkError: Error {
     case invalidURL
@@ -28,7 +29,9 @@ class NetworkManager {
                 return }
             
             do {
-                let weather = try JSONDecoder().decode(Weather.self, from: data)
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                let weather = try decoder.decode(Weather.self, from: data)
                 completion(.success(weather))
             } catch let error {
                 completion(.failure(.decodingError))
@@ -36,6 +39,33 @@ class NetworkManager {
             }
         }.resume()
     }
+    
+//    func fetchDataWithAlamofire(link: Link.RawValue) {
+//        AF.request(link)
+//            .validate()
+//            .responseJSON { dataResponse in
+//                print(dataResponse)
+                    
+//                            CurrentConditions(
+//                                dayhour: weathersData["dayhour"] as? String,
+//                                temp: weathersData["temp"] as? [String: Int],
+//                                precip: weathersData["precip"] as? String,
+//                                humidity: weathersData["humidity"] as? String,
+//                                wind: weathersData["wind"] as? [String: Int],
+//                                iconURL: weathersData["iconURL"] as? String,
+//                                comment: weathersData["comment"] as? String
+//                            )
+                            
+                            
+//                                [NextDays(
+//                                    day: weathersData["day"] as? String,
+//                                    comment: weathersData["comment"] as? String,
+//                                    maxTemp: weathersData["max_temp"] as? [String: Int],
+//                                    minTemp: weathersData["min_temp"] as? [String: Int],
+//                                    iconURL: weathersData["iconURL"] as? String)]
+                        
+//            }
+//    }
 }
 
 class IconManager {
